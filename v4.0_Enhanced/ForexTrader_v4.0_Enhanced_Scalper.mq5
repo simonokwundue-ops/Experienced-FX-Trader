@@ -149,15 +149,7 @@ input bool     UseATRFilter = true;           // Use ATR Volatility Filter
 input int      ATR_Period = 14;               // ATR Period
 input double   ATR_MinimumPips = 3.0;         // Minimum ATR (Pips) - Lower for scalping
 input double   ATR_MaximumPips = 50.0;        // Maximum ATR (Pips) - Avoid high volatility
-
-//+------------------------------------------------------------------+
-//| Input Parameters - Momentum & Breakout                           |
-//+------------------------------------------------------------------+
-input group "=== Momentum & Breakout Detection ==="
-input int      MomentumBars = 3;              // Bars for Momentum Calculation
-input double   MinMomentumPips = 3.0;         // Minimum Momentum (Pips)
-input int      BreakoutBars = 5;              // Bars for Breakout Detection
-input double   BreakoutMinPips = 5.0;         // Minimum Breakout Size (Pips)
+input double   MinMomentumPips = 2.0;         // Minimum Momentum (Pips) - NEW for scalping
 
 //+------------------------------------------------------------------+
 //| Input Parameters - Portfolio Risk Management                     |
