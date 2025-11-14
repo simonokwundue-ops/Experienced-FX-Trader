@@ -1,0 +1,60 @@
+//+------------------------------------------------------------------+
+//|                        ForexTrader_v3_Conservative.set           |
+//|                  Conservative Settings - Low Risk Profile        |
+//+------------------------------------------------------------------+
+
+; Strategy Settings
+UseAdaptiveMA=true
+FastMA_Period=10
+SlowMA_Period=50
+MA_Method=1
+MA_Price=0
+
+; Signal Filters
+UseADXFilter=true
+ADX_Period=14
+ADX_Minimum=25
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=10.0
+ATR_MaximumPips=80.0
+MA_SlopeMinimum=5.0
+MA_DistanceMinimum=3.0
+
+; Risk Management
+RiskPercent=1.0
+StopLossPips=50.0
+TakeProfitPips=100.0
+UseDynamicSLTP=false
+MaxDrawdownPercent=20.0
+MaxSpreadPips=3.0
+
+; Position Management
+UseTrailingStop=true
+TrailingStopPips=35.0
+TrailingStepPips=5.0
+TrailingActivationPips=25.0
+UseBreakeven=true
+BreakevenTriggerPips=25.0
+BreakevenOffsetPips=3.0
+
+; Money Management
+MaxLotSize=2.0
+MinLotSize=0.01
+UseFixedLot=false
+
+; Trading Controls
+CooldownMinutes=20
+SeparateCooldownByDirection=true
+MaxDailyTrades=5
+MaxConcurrentPositions=1
+UseTradingHours=true
+StartHour=8
+EndHour=18
+
+; Advanced Settings
+MagicNumber=123456
+TradeComment=ForexTrader_v3_Conservative
+Slippage=30
+MaxRetries=3
+RetryDelayMs=1000

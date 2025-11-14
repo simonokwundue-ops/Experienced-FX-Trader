@@ -1,0 +1,110 @@
+//+------------------------------------------------------------------+
+//|                    ForexTrader_v3_Multi_Moderate.set             |
+//|            Multi-Strategy EA - Moderate Settings                 |
+//+------------------------------------------------------------------+
+
+; Strategy Selection
+UseMAStrategy=true
+UseRSIStrategy=true
+UseBBStrategy=true
+UseMACDStrategy=true
+MinSignalScore=60
+
+; Multi-Timeframe Analysis
+UseMultiTimeframe=true
+TimeFrame1=15
+TimeFrame2=30
+TimeFrame3=60
+MinTFConfirmation=2
+
+; Moving Average Strategy
+FastMA_Period=10
+SlowMA_Period=50
+MA_Method=1
+MA_Price=0
+MA_SlopeMinimum=5.0
+
+; RSI Strategy
+RSI_Period=14
+RSI_Oversold=30.0
+RSI_Overbought=70.0
+RSI_Price=0
+
+; Bollinger Bands Strategy
+BB_Period=20
+BB_Deviation=2.0
+BB_AppliedPrice=0
+
+; MACD Strategy
+MACD_FastEMA=12
+MACD_SlowEMA=26
+MACD_Signal=9
+MACD_Price=0
+
+; Signal Filters
+UseADXFilter=true
+ADX_Period=14
+ADX_Minimum=20.0
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=10.0
+ATR_MaximumPips=100.0
+
+; Portfolio Risk Management
+MaxPortfolioRisk=10.0
+BaseRiskPercent=1.5
+UseDynamicRisk=true
+MinRiskPercent=0.5
+MaxRiskPercent=2.5
+MaxDrawdownPercent=25.0
+
+; Position Sizing
+StopLossPips=40.0
+TakeProfitPips=80.0
+UseATRSizing=true
+ATR_SL_Multiplier=2.0
+ATR_TP_Multiplier=4.0
+MaxSpreadPips=5.0
+
+; Position Management
+UseBreakeven=true
+BreakevenTriggerPips=20.0
+BreakevenOffsetPips=2.0
+UsePartialTP=true
+PartialTP_Pips=40.0
+PartialTP_Percent=50.0
+UseTrailingStop=true
+TrailingStopPips=30.0
+TrailingStepPips=5.0
+TrailingActivationPips=20.0
+
+; Trading Controls
+MaxDailyTrades=15
+MaxConcurrentPositions=4
+CooldownMinutes=15
+SeparateCooldownByDirection=true
+
+; Session Filters
+UseSessionFilter=true
+TradeAsianSession=false
+TradeLondonSession=true
+TradeNYSession=true
+AsianStartHour=0
+AsianEndHour=8
+LondonStartHour=7
+LondonEndHour=16
+NYStartHour=12
+NYEndHour=21
+
+; Money Management
+MaxLotSize=5.0
+MinLotSize=0.01
+UseCompounding=true
+UseFixedLot=false
+
+; Advanced Settings
+MagicNumber=234567
+TradeComment=ForexTrader_v3_Multi
+Slippage=30
+MaxRetries=3
+RetryDelayMs=1000
