@@ -296,6 +296,8 @@ datetime lastTradeDate = 0;
 int dailyTradeCount = 0;
 double startOfDayBalance = 0;
 double startOfDayEquity = 0;
+datetime lastBuyTime = 0;
+datetime lastSellTime = 0;
 
 // Strategy performance tracking
 struct StrategyStats
@@ -326,6 +328,16 @@ int handleRegimeFastSMA, handleRegimeSlowSMA, handleRegimeADX, handleRegimeATR;
 double regimeFastSMA[], regimeSlowSMA[], regimeADX[], regimeATR[];
 datetime lastRegimeUpdate = 0;
 int regimeUpdateIntervalSeconds = 300; // Update regime every 5 minutes
+
+//+------------------------------------------------------------------+
+//| Forward Declarations                                              |
+//+------------------------------------------------------------------+
+bool OpenPosition(ENUM_ORDER_TYPE orderType, double price, ENUM_STRATEGY_TYPE strategy);
+void UpdateMarketRegime();
+bool IsStrategyEnabledForRegime(ENUM_STRATEGY_TYPE strategy);
+int GetRegimeAdjustedThreshold();
+int CheckMomentum(string symbol, double pipSz);
+int CheckBreakout(string symbol, double pipSz);
 
 //+------------------------------------------------------------------+
 //| Expert Initialization                                             |
