@@ -39,7 +39,7 @@
 
 1. In MT5, drag the EA onto your chart
 2. In the Inputs tab, click "Load"
-3. Navigate to the `Config/` folder
+3. Navigate to the `MQL5/Presets/` folder
 4. Load one of these preset files:
    - `ForexTrader_v3_Conservative.set` - Low risk (1% per trade)
    - `ForexTrader_v3_Moderate.set` - Balanced (2% per trade)

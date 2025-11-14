@@ -80,14 +80,14 @@ ForexTrader v3.2 represents a major enhancement over v3.0, designed to address t
 
 ### Configuration Files
 
-**Moderate** (`Config/ForexTrader_v3.2_Moderate.set`)
+**Moderate** (`MQL5/Presets/ForexTrader_v3.2_Moderate.set`)
 - Balanced risk/reward
 - 5 symbols: EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD
 - MinSignalScore: 35
 - BaseRisk: 1.5%
 - Cooldown: 3 minutes
 
-**Aggressive** (`Config/ForexTrader_v3.2_Aggressive.set`)
+**Aggressive** (`MQL5/Presets/ForexTrader_v3.2_Aggressive.set`)
 - Maximum activity
 - 8 symbols including crosses
 - MinSignalScore: 25
@@ -108,7 +108,7 @@ ForexTrader v3.2 represents a major enhancement over v3.0, designed to address t
 
 3. **Load Configuration**
    - In EA settings, click "Load"
-   - Select `Config/ForexTrader_v3.2_Moderate.set`
+   - Select `MQL5/Presets/ForexTrader_v3.2_Moderate.set`
    - Or configure manually
 
 4. **Key Settings to Verify**
@@ -188,7 +188,7 @@ ForexTrader v3.2 represents a major enhancement over v3.0, designed to address t
 
 ### Configuration Files
 
-**Scalper** (`Config/ForexTrader_v3.2_Scalper.set`)
+**Scalper** (`MQL5/Presets/ForexTrader_v3.2_Scalper.set`)
 - High-frequency optimized
 - 4 high-liquidity symbols
 - MinSignalScore: 20
@@ -214,7 +214,7 @@ ForexTrader v3.2 represents a major enhancement over v3.0, designed to address t
    - Drag EA to chart
 
 4. **Load Scalper Configuration**
-   - Load `Config/ForexTrader_v3.2_Scalper.set`
+   - Load `MQL5/Presets/ForexTrader_v3.2_Scalper.set`
    - Verify settings:
      ```
      MinSignalScore = 20
@@ -492,9 +492,9 @@ Portfolio-wide floating loss monitoring:
 - This file - v3.2 user guide
 
 ### Configuration Files
-- `Config/ForexTrader_v3.2_Moderate.set`
-- `Config/ForexTrader_v3.2_Aggressive.set`
-- `Config/ForexTrader_v3.2_Scalper.set`
+- `MQL5/Presets/ForexTrader_v3.2_Moderate.set`
+- `MQL5/Presets/ForexTrader_v3.2_Aggressive.set`
+- `MQL5/Presets/ForexTrader_v3.2_Scalper.set`
 
 ### Strategy Tester Files
 - `ForexTrader_v3.2_MultiStrategy_Production.ini`

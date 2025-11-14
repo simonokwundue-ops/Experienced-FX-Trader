@@ -31,7 +31,7 @@ This repository now includes `.ini` configuration files for each EA variant to f
 6. **Load Settings**:
    - Click "Expert Properties" button
    - In the "Inputs" tab, click "Load"
-   - Navigate to the `.set` file in the Config folder (e.g., `ForexTrader_v3_Conservative.set`)
+   - Navigate to the `.set` file in the MQL5/Presets folder (e.g., `ForexTrader_v3_Conservative.set`)
 7. **Start Test** - Click "Start"
 
 ### Method 2: Multi-Symbol Testing (Using .ini Files)
@@ -114,7 +114,7 @@ EA: ForexTrader_v3_Production.mq5
 Symbol: EURUSD
 Timeframe: M30
 Period: 6 months
-Settings: Config/ForexTrader_v3_Conservative.set
+Settings: MQL5/Presets/ForexTrader_v3_Conservative.set
 Model: Every tick
 ```
 
@@ -298,7 +298,7 @@ You can modify the .ini files to create custom test configurations:
 - **Full EA Documentation**: README_v3.md
 - **Quick Start Guide**: QUICKSTART_v3.md
 - **Implementation Details**: IMPLEMENTATION_V3.md
-- **Preset Configurations**: Config/ folder (.set files)
+- **Preset Configurations**: MQL5/Presets/ folder (.set files)
 
 ## Notes
 
@@ -347,7 +347,7 @@ You can modify the .ini files to create custom test configurations:
 ### Load .set File in Tester
 ```
 1. Strategy Tester → Expert Properties → Inputs → Load
-2. Navigate to: Config/ForexTrader_v3_Conservative.set
+2. Navigate to: MQL5/Presets/ForexTrader_v3_Conservative.set
 3. Click Open
 ```
 

@@ -32,6 +32,36 @@
 
 [Read Complete v3.2 Documentation →](README_v3.2.md)
 
+## 📁 Repository Structure (MT5 Standard)
+
+This repository follows the official MetaTrader 5 file tree standard for easy deployment:
+
+```
+Experienced-FX-Trader/
+├── MQL5/                          # MT5 standard directory
+│   ├── Experts/                   # Expert Advisor files (.mq5)
+│   │   ├── ForexTrader_v3.2_MultiStrategy_Production.mq5 ⭐
+│   │   ├── ForexTrader_v3.2_Scalper_Production.mq5 ⭐
+│   │   ├── ForexTrader_v3_Production.mq5 ✅
+│   │   ├── ForexTrader_v3_MultiStrategy_Production.mq5 ✅
+│   │   └── [Legacy versions...]
+│   ├── Presets/                   # Configuration presets (.set)
+│   │   ├── ForexTrader_v3.2_Moderate.set
+│   │   ├── ForexTrader_v3.2_Aggressive.set
+│   │   └── [Other presets...]
+│   ├── Files/                     # Data files, logs, and .ini tester configs
+│   │   ├── ForexTrader_v3.2_MultiStrategy_Production.ini
+│   │   ├── Previous Logs/
+│   │   └── [Analysis files...]
+│   └── Include/                   # Header files (.mqh) - for future use
+├── Docs/                          # Educational materials
+│   ├── Trading_Course_Advanced.pdf
+│   └── [Forex guides...]
+└── [Documentation files...]       # README, guides, etc.
+```
+
+**To install:** Simply copy the entire `MQL5/` folder to your MT5 Data Folder.
+
 ## Quick Start
 
 **New users start here:** [v3.2 User Guide](README_v3.2.md) | [v3.0 Quick Start](QUICKSTART_v3.md)
@@ -140,7 +170,7 @@ Features:
 
 ### Configuration Files
 
-Pre-made settings in `Config/` directory:
+Pre-made settings in `MQL5/Presets/` directory:
 
 **v3.2 Configurations:**
 - `ForexTrader_v3.2_Moderate.set` - Balanced (35 signal score, 3min cooldown)
@@ -154,7 +184,7 @@ Pre-made settings in `Config/` directory:
 
 ### Strategy Tester .ini Files
 
-Pre-configured testing setups for all EA variants:
+Pre-configured testing setups in `MQL5/Files/` for all EA variants:
 
 **v3.2 Testing:**
 - `ForexTrader_v3.2_MultiStrategy_Production.ini` - v3.2 Multi testing ⭐
@@ -241,7 +271,8 @@ Pre-configured testing setups for all EA variants:
 
 1. **Copy EA file to MT5:**
    ```
-   [MT5 Data Folder]/MQL5/Experts/
+   Copy from: MQL5/Experts/
+   To: [MT5 Data Folder]/MQL5/Experts/
    ```
 
 2. **Compile in MetaEditor:**
@@ -250,7 +281,7 @@ Pre-configured testing setups for all EA variants:
 
 3. **Configure and run:**
    - Drag EA to chart
-   - Load preset from `Config/` folder
+   - Load preset from `MQL5/Presets/` folder
    - Enable AutoTrading (F7)
 
 [Detailed installation guide →](QUICKSTART_v3.md#step-2-installation)
