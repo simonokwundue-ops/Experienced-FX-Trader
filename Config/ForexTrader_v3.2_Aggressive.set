@@ -1,0 +1,122 @@
+;+------------------------------------------------------------------+
+;|                     ForexTrader v3.2 Multi-Strategy             |
+;|                  Aggressive/Active Configuration                 |
+;|                   For Maximum Trading Activity                   |
+;+------------------------------------------------------------------+
+
+;=== Multi-Symbol Trading (v3.2) ===
+TradeMultipleSymbols=true
+TradingSymbols=EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD,NZDUSD,EURGBP,EURJPY
+MaxPositionsPerSymbol=2
+AllowHedging=true
+MaxTotalPositions=5
+MaxFloatingEquityPercent=5.0
+
+;=== Strategy Selection ===
+UseMAStrategy=true
+UseRSIStrategy=true
+UseBBStrategy=true
+UseMACDStrategy=true
+MinSignalScore=25
+
+;=== Multi-Timeframe Analysis ===
+UseMultiTimeframe=false
+TimeFrame1=16388
+TimeFrame2=16389
+TimeFrame3=16385
+MinTFConfirmation=2
+
+;=== Moving Average Strategy ===
+FastMA_Period=8
+SlowMA_Period=34
+MA_Method=1
+MA_Price=0
+MA_SlopeMinimum=3.0
+
+;=== RSI Strategy ===
+RSI_Period=14
+RSI_Oversold=35.0
+RSI_Overbought=65.0
+RSI_Price=0
+
+;=== Bollinger Bands Strategy ===
+BB_Period=20
+BB_Deviation=2.0
+BB_AppliedPrice=0
+
+;=== MACD Strategy ===
+MACD_FastEMA=12
+MACD_SlowEMA=26
+MACD_Signal=9
+MACD_Price=0
+
+;=== Signal Filters ===
+UseADXFilter=false
+ADX_Period=14
+ADX_Minimum=15.0
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=5.0
+ATR_MaximumPips=150.0
+
+;=== Portfolio Risk Management ===
+MaxPortfolioRisk=10.0
+BaseRiskPercent=2.0
+UseDynamicRisk=true
+MinRiskPercent=1.0
+MaxRiskPercent=3.0
+MaxDrawdownPercent=30.0
+DailyDrawdownPercent=5.0
+
+;=== Position Sizing ===
+StopLossPips=35.0
+TakeProfitPips=70.0
+UseATRSizing=true
+ATR_SL_Multiplier=1.8
+ATR_TP_Multiplier=3.5
+MaxSpreadPips=6.0
+
+;=== Position Management ===
+UseBreakeven=true
+BreakevenTriggerPips=15.0
+BreakevenOffsetPips=2.0
+UsePartialTP=true
+PartialTP_Pips=30.0
+PartialTP_Percent=50.0
+UseTrailingStop=true
+TrailingStopPips=25.0
+TrailingStepPips=5.0
+TrailingActivationPips=15.0
+
+;=== Trading Controls ===
+MaxDailyTrades=100
+MaxConcurrentPositions=5
+CooldownMinutes=1
+SeparateCooldownByDirection=true
+PostCloseCooldownMinutes=1
+
+;=== Session Filters ===
+UseSessionFilter=false
+TradeAsianSession=true
+TradeLondonSession=true
+TradeNYSession=true
+AsianStartHour=0
+AsianEndHour=8
+LondonStartHour=7
+LondonEndHour=16
+NYStartHour=12
+NYEndHour=21
+
+;=== Money Management ===
+MaxLotSize=5.0
+MinLotSize=0.01
+UseCompounding=true
+UseFixedLot=false
+FixedLotSize=0.1
+
+;=== Advanced Settings ===
+MagicNumber=234567
+TradeComment=ForexTrader_v3.2_Aggressive
+Slippage=30
+MaxRetries=3
+RetryDelayMs=1000
