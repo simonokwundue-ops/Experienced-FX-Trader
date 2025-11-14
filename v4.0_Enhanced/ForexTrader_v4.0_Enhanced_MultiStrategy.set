@@ -1,0 +1,143 @@
+; ForexTrader v4.0 Enhanced - Balanced Production Configuration
+; This configuration provides optimal balance between signal generation and quality
+; Designed for moderate traders seeking active trading with intelligent risk management
+
+; === Multi-Symbol Trading ===
+TradeMultipleSymbols=true
+TradingSymbols=EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD
+MaxPositionsPerSymbol=2
+AllowHedging=true
+MaxTotalPositions=5
+MaxFloatingEquityPercent=5.0
+
+; === Market Regime Detection (NEW in v4.0) ===
+UseMarketRegimeFilter=true
+RegimeTimeframe=16385
+Regime_FastSMA=50
+Regime_SlowSMA=200
+Regime_ADX_Trending=25.0
+Regime_ADX_Ranging=20.0
+Regime_ATR_HighVol_Multiplier=1.5
+Regime_ATR_Period=100
+
+; === Strategy Selection ===
+UseMAStrategy=true
+UseRSIStrategy=true
+UseBBStrategy=true
+UseMACDStrategy=true
+MinSignalScore=25
+UseAdaptiveScoring=true
+SignalConfluenceBonus=15.0
+
+; === Multi-Timeframe Analysis ===
+UseMultiTimeframe=true
+TimeFrame1=16388
+TimeFrame2=16389
+TimeFrame3=16385
+MinTFConfirmation=2
+
+; === Moving Average Strategy ===
+FastMA_Period=10
+SlowMA_Period=50
+MA_Method=1
+MA_Price=0
+MA_SlopeMinimum=3.0
+MA_DistanceMinimum=2.0
+UseMomentumFilter=true
+MomentumBars=3
+
+; === Breakout Detection (NEW in v4.0) ===
+UseBreakoutDetection=true
+BreakoutBars=5
+BreakoutThresholdPips=5.0
+
+; === RSI Strategy ===
+RSI_Period=14
+RSI_Oversold=30.0
+RSI_Overbought=70.0
+RSI_Price=0
+
+; === Bollinger Bands Strategy ===
+BB_Period=20
+BB_Deviation=2.0
+BB_AppliedPrice=0
+
+; === MACD Strategy ===
+MACD_FastEMA=12
+MACD_SlowEMA=26
+MACD_Signal=9
+MACD_Price=0
+
+; === Signal Filters ===
+UseADXFilter=true
+ADX_Period=14
+ADX_Minimum=20.0
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=10.0
+ATR_MaximumPips=100.0
+
+; === Portfolio Risk Management ===
+MaxPortfolioRisk=10.0
+BaseRiskPercent=1.5
+UseDynamicRisk=true
+MinRiskPercent=0.5
+MaxRiskPercent=3.0
+MaxDrawdownPercent=30.0
+DailyDrawdownPercent=5.0
+UseVolatilityAdjustedRisk=true
+
+; === Position Sizing (ATR-Based Dynamic) ===
+StopLossPips=40.0
+TakeProfitPips=80.0
+UseATRSizing=true
+ATR_SL_Multiplier=2.0
+ATR_TP_Multiplier=4.0
+MinSL_Pips=15.0
+MaxSL_Pips=100.0
+MaxSpreadPips=5.0
+
+; === Position Management ===
+UseBreakeven=true
+BreakevenTriggerPips=20.0
+BreakevenOffsetPips=2.0
+UsePartialTP=true
+PartialTP_Pips=40.0
+PartialTP_Percent=50.0
+UseTrailingStop=true
+TrailingStopPips=30.0
+TrailingStepPips=5.0
+TrailingActivationPips=20.0
+
+; === Trading Controls ===
+MaxDailyTrades=100
+MaxConcurrentPositions=5
+CooldownMinutes=1
+SeparateCooldownByDirection=true
+PostCloseCooldownMinutes=1
+
+; === Session Filters ===
+UseSessionFilter=false
+TradeAsianSession=true
+TradeLondonSession=true
+TradeNYSession=true
+AsianStartHour=0
+AsianEndHour=8
+LondonStartHour=7
+LondonEndHour=16
+NYStartHour=12
+NYEndHour=21
+
+; === Money Management ===
+MaxLotSize=5.0
+MinLotSize=0.01
+UseCompounding=true
+UseFixedLot=false
+FixedLotSize=0.1
+
+; === Advanced Settings ===
+MagicNumber=400000
+TradeComment=ForexTrader_v4.0_Enhanced
+Slippage=30
+MaxRetries=3
+RetryDelayMs=1000
