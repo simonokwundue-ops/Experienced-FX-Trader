@@ -266,6 +266,10 @@ int dailyTradeCount = 0;
 double startOfDayBalance = 0;
 double startOfDayEquity = 0;
 
+// Cooldown tracking (single-symbol mode)
+datetime lastBuyTime = 0;
+datetime lastSellTime = 0;
+
 // Strategy performance tracking
 struct StrategyStats
 {
