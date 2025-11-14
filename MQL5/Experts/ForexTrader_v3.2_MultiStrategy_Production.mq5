@@ -255,6 +255,10 @@ int dailyTradeCount = 0;
 double startOfDayBalance = 0;
 double startOfDayEquity = 0;
 
+// Cooldown tracking (single-symbol mode)
+datetime lastBuyTime = 0;
+datetime lastSellTime = 0;
+
 // Strategy performance tracking
 struct StrategyStats
 {
@@ -1660,27 +1664,27 @@ void CheckSymbolEntrySignals(int symbolIndex)
    SymbolData data = symbolDataArray[symbolIndex];
    string symbol = data.symbol;
    
-   //--- Update indicator buffers
-   double fastMA[], slowMA[], atrBuf[], adxBuf[], rsiBuf[];
-   double bbUpper[], bbMiddle[], bbLower[];
-   double macdMain[], macdSignal[];
+   //--- Update indicator buffers (local variables with distinct names)
+   double localFastMA[], localSlowMA[], atrBuf[], adxBuf[], rsiBuf[];
+   double localBBUpper[], localBBMiddle[], localBBLower[];
+   double localMACDMain[], localMACDSignal[];
    
-   ArraySetAsSeries(fastMA, true);
-   ArraySetAsSeries(slowMA, true);
+   ArraySetAsSeries(localFastMA, true);
+   ArraySetAsSeries(localSlowMA, true);
    ArraySetAsSeries(atrBuf, true);
    ArraySetAsSeries(adxBuf, true);
    ArraySetAsSeries(rsiBuf, true);
-   ArraySetAsSeries(bbUpper, true);
-   ArraySetAsSeries(bbMiddle, true);
-   ArraySetAsSeries(bbLower, true);
-   ArraySetAsSeries(macdMain, true);
-   ArraySetAsSeries(macdSignal, true);
+   ArraySetAsSeries(localBBUpper, true);
+   ArraySetAsSeries(localBBMiddle, true);
+   ArraySetAsSeries(localBBLower, true);
+   ArraySetAsSeries(localMACDMain, true);
+   ArraySetAsSeries(localMACDSignal, true);
    
    //--- Copy indicator data
    if(UseMAStrategy)
    {
-      if(CopyBuffer(data.handleFastMA, 0, 0, 3, fastMA) < 3) return;
-      if(CopyBuffer(data.handleSlowMA, 0, 0, 3, slowMA) < 3) return;
+      if(CopyBuffer(data.handleFastMA, 0, 0, 3, localFastMA) < 3) return;
+      if(CopyBuffer(data.handleSlowMA, 0, 0, 3, localSlowMA) < 3) return;
    }
    
    if(UseATRFilter)
@@ -1700,15 +1704,15 @@ void CheckSymbolEntrySignals(int symbolIndex)
    
    if(UseBBStrategy)
    {
-      if(CopyBuffer(data.handleBB, 0, 0, 2, bbUpper) < 2) return;
-      if(CopyBuffer(data.handleBB, 1, 0, 2, bbMiddle) < 2) return;
-      if(CopyBuffer(data.handleBB, 2, 0, 2, bbLower) < 2) return;
+      if(CopyBuffer(data.handleBB, 0, 0, 2, localBBUpper) < 2) return;
+      if(CopyBuffer(data.handleBB, 1, 0, 2, localBBMiddle) < 2) return;
+      if(CopyBuffer(data.handleBB, 2, 0, 2, localBBLower) < 2) return;
    }
    
    if(UseMACDStrategy)
    {
-      if(CopyBuffer(data.handleMACD, 0, 0, 3, macdMain) < 3) return;
-      if(CopyBuffer(data.handleMACD, 1, 0, 3, macdSignal) < 3) return;
+      if(CopyBuffer(data.handleMACD, 0, 0, 3, localMACDMain) < 3) return;
+      if(CopyBuffer(data.handleMACD, 1, 0, 3, localMACDSignal) < 3) return;
    }
    
    //--- Check basic filters
@@ -1736,14 +1740,14 @@ void CheckSymbolEntrySignals(int symbolIndex)
    string sellReasons = "";
    
    //--- MA Strategy
-   if(UseMAStrategy && ArraySize(fastMA) >= 3)
+   if(UseMAStrategy && ArraySize(localFastMA) >= 3)
    {
-      bool bullishCross = fastMA[1] > slowMA[1] && fastMA[2] <= slowMA[2];
-      bool bearishCross = fastMA[1] < slowMA[1] && fastMA[2] >= slowMA[2];
+      bool bullishCross = localFastMA[1] > localSlowMA[1] && localFastMA[2] <= localSlowMA[2];
+      bool bearishCross = localFastMA[1] < localSlowMA[1] && localFastMA[2] >= localSlowMA[2];
       
       if(bullishCross)
       {
-         double maSlope = MathAbs(fastMA[1] - fastMA[2]) / data.pipSize;
+         double maSlope = MathAbs(localFastMA[1] - localFastMA[2]) / data.pipSize;
          if(maSlope >= MA_SlopeMinimum)
          {
             buySignalScore += 30;
@@ -1752,7 +1756,7 @@ void CheckSymbolEntrySignals(int symbolIndex)
       }
       else if(bearishCross)
       {
-         double maSlope = MathAbs(fastMA[1] - fastMA[2]) / data.pipSize;
+         double maSlope = MathAbs(localFastMA[1] - localFastMA[2]) / data.pipSize;
          if(maSlope >= MA_SlopeMinimum)
          {
             sellSignalScore += 30;
@@ -1778,18 +1782,18 @@ void CheckSymbolEntrySignals(int symbolIndex)
    }
    
    //--- BB Strategy
-   if(UseBBStrategy && ArraySize(bbLower) >= 2)
+   if(UseBBStrategy && ArraySize(localBBLower) >= 2)
    {
       double close = iClose(symbol, PERIOD_CURRENT, 0);
       double closePrev = iClose(symbol, PERIOD_CURRENT, 1);
       
-      if(closePrev <= bbLower[1] && close > bbLower[0])
+      if(closePrev <= localBBLower[1] && close > localBBLower[0])
       {
          buySignalScore += 25;
          buyReasons += "BB Lower Bounce | ";
       }
       
-      if(closePrev >= bbUpper[1] && close < bbUpper[0])
+      if(closePrev >= localBBUpper[1] && close < localBBUpper[0])
       {
          sellSignalScore += 25;
          sellReasons += "BB Upper Fall | ";
@@ -1797,15 +1801,15 @@ void CheckSymbolEntrySignals(int symbolIndex)
    }
    
    //--- MACD Strategy
-   if(UseMACDStrategy && ArraySize(macdMain) >= 3)
+   if(UseMACDStrategy && ArraySize(localMACDMain) >= 3)
    {
-      if(macdMain[1] > macdSignal[1] && macdMain[2] <= macdSignal[2])
+      if(localMACDMain[1] > localMACDSignal[1] && localMACDMain[2] <= localMACDSignal[2])
       {
          buySignalScore += 20;
          buyReasons += "MACD Bullish | ";
       }
       
-      if(macdMain[1] < macdSignal[1] && macdMain[2] >= macdSignal[2])
+      if(localMACDMain[1] < localMACDSignal[1] && localMACDMain[2] >= localMACDSignal[2])
       {
          sellSignalScore += 20;
          sellReasons += "MACD Bearish | ";
@@ -2100,12 +2104,12 @@ void ManageSymbolPositions(string symbol)
                            SymbolInfoDouble(symbol, SYMBOL_BID) : 
                            SymbolInfoDouble(symbol, SYMBOL_ASK);
       
-      double pipSize = GetSymbolPipSize(symbol);
+      double symbolPipSize = GetSymbolPipSize(symbol);
       double profitPips = 0;
       if(posType == POSITION_TYPE_BUY)
-         profitPips = (currentPrice - openPrice) / pipSize;
+         profitPips = (currentPrice - openPrice) / symbolPipSize;
       else
-         profitPips = (openPrice - currentPrice) / pipSize;
+         profitPips = (openPrice - currentPrice) / symbolPipSize;
       
       //--- Partial TP
       if(UsePartialTP && profitPips >= PartialTP_Pips)
@@ -2122,10 +2126,10 @@ void ManageSymbolPositions(string symbol)
          
          if(!alreadyDone)
          {
-            double minLot = SymbolInfoDouble(symbol, SYMBOL_VOLUME_MIN);
-            double closeVolume = MathRound((volume * PartialTP_Percent / 100.0) / minLot) * minLot;
+            double symbolMinLot = SymbolInfoDouble(symbol, SYMBOL_VOLUME_MIN);
+            double closeVolume = MathRound((volume * PartialTP_Percent / 100.0) / symbolMinLot) * symbolMinLot;
             
-            if(closeVolume >= minLot && closeVolume < volume)
+            if(closeVolume >= symbolMinLot && closeVolume < volume)
             {
                if(trade.PositionClosePartial(ticket, closeVolume))
                {
@@ -2214,13 +2218,13 @@ void ManageSymbolPositions(string symbol)
 //+------------------------------------------------------------------+
 double GetSymbolPipSize(string symbol)
 {
-   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   double symbolPoint = SymbolInfoDouble(symbol, SYMBOL_POINT);
    int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
    
    if(digits == 3 || digits == 5)
-      return point * 10;
+      return symbolPoint * 10;
    else
-      return point;
+      return symbolPoint;
 }
 
 //+------------------------------------------------------------------+
