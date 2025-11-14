@@ -8,7 +8,23 @@
 
 The original EA versions in this repository (Base, v1.2, v2) have been identified as having **18+ critical flaws** that make them unsuitable for live trading. These have been kept for reference only.
 
+**Known issues with Base Version include:**
+- Takes very long time to open positions (days in strategy tester)
+- Only opens one position at a time per pair
+- Still faces significant drawdown due to 10x SL/TP calculation bug
+- Lacks proper risk management and filters
+
+[Read detailed analysis of Base Version issues →](BASE_VERSION_ISSUES.md)
+
 ### ✅ Use v3.0 Production EAs Instead
+
+**v3.0 fixes ALL issues:**
+- ✅ Trades actively (hours, not days)
+- ✅ Supports multiple concurrent positions
+- ✅ Fixed SL/TP calculations
+- ✅ Advanced risk management
+- ✅ Multiple signal filters (ADX, ATR, etc.)
+- ✅ Comprehensive testing with .ini files
 
 ## Quick Start
 
@@ -50,10 +66,15 @@ Features:
 ### Legacy EAs (For Reference Only) ⚠️
 
 - `ForexTrader_EA Base Version.mq5` - Original version with critical flaws
+  - ⚠️ Takes days to open positions
+  - ⚠️ Only 1 position per pair
+  - ⚠️ 10x SL/TP calculation bug causes large drawdowns
 - `ForexTrader_v1.2_ Tuned By User.mq5` - Improved but still flawed
 - `ForexTrader_v2_MultiStrategy.mq5` - Multi-strategy but with same flaws
 
 **⚠️ DO NOT USE LEGACY VERSIONS FOR LIVE TRADING**
+
+[Why Base Version has these issues and how v3 fixes them →](BASE_VERSION_ISSUES.md)
 
 ## Documentation
 
