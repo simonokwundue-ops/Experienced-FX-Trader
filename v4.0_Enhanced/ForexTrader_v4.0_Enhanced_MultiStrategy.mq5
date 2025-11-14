@@ -230,7 +230,7 @@ input double   FixedLotSize = 0.1;            // Fixed Lot Size
 //| Input Parameters - Advanced Settings                             |
 //+------------------------------------------------------------------+
 input group "=== Advanced Settings ==="
-input int      MagicNumber = 234567;          // Magic Number
+input int      MagicNumber = 400000;          // Magic Number
 input string   TradeComment = "ForexTrader_v4.0_Enhanced"; // Trade Comment
 input int      Slippage = 30;                 // Max Slippage (Points)
 input int      MaxRetries = 3;                // Max Order Retries
@@ -1271,6 +1271,56 @@ void UpdateMarketRegime()
 }
 
 //+------------------------------------------------------------------+
+//| Check if Strategy is Enabled for Current Regime (NEW in v4.0)    |
+//+------------------------------------------------------------------+
+bool IsStrategyEnabledForRegime(ENUM_STRATEGY_TYPE strategy)
+{
+   if(!UseMarketRegimeFilter)
+      return true; // All strategies enabled if regime filter disabled
+   
+   //--- Enable momentum strategies in trending markets
+   if(currentMarketRegime == REGIME_STRONG_UPTREND || currentMarketRegime == REGIME_STRONG_DOWNTREND)
+   {
+      return (strategy == STRATEGY_MA || strategy == STRATEGY_MACD);
+   }
+   
+   //--- Enable mean reversion strategies in ranging low-vol markets
+   if(currentMarketRegime == REGIME_RANGING_LOW_VOL)
+   {
+      return (strategy == STRATEGY_RSI || strategy == STRATEGY_BB);
+   }
+   
+   //--- Cautious in high-vol ranging (reduce activity)
+   if(currentMarketRegime == REGIME_RANGING_HIGH_VOL)
+   {
+      return false; // Block all strategies in choppy high-vol
+   }
+   
+   //--- Neutral: allow all but with higher thresholds
+   return true;
+}
+
+//+------------------------------------------------------------------+
+//| Get Regime-Adjusted Signal Threshold (NEW in v4.0)               |
+//+------------------------------------------------------------------+
+int GetRegimeAdjustedThreshold()
+{
+   if(!UseAdaptiveScoring)
+      return MinSignalScore;
+   
+   //--- Lower thresholds in strong trends (more opportunities)
+   if(currentMarketRegime == REGIME_STRONG_UPTREND || currentMarketRegime == REGIME_STRONG_DOWNTREND)
+      return (int)(MinSignalScore * 0.8); // 20% reduction
+   
+   //--- Keep normal threshold in ranging low-vol
+   if(currentMarketRegime == REGIME_RANGING_LOW_VOL)
+      return MinSignalScore;
+   
+   //--- Increase threshold in neutral/uncertain
+   return (int)(MinSignalScore * 1.3); // 30% increase
+}
+
+//+------------------------------------------------------------------+
 //| Check Momentum Filter (NEW in v4.0)                              |
 //+------------------------------------------------------------------+
 int CheckMomentum(string symbol, double pipSz)
@@ -2031,56 +2081,106 @@ void CheckSymbolEntrySignals(int symbolIndex)
       if(adxBuf[0] < ADX_Minimum) return;
    }
    
-   //--- Generate signals
+   //--- Generate signals (with regime filtering)
    int buySignalScore = 0;
    int sellSignalScore = 0;
    string buyReasons = "";
    string sellReasons = "";
+   int strategiesUsed = 0;
    
-   //--- MA Strategy
-   if(UseMAStrategy && ArraySize(fastMA) >= 3)
+   //--- Enhanced MA Strategy (check regime)
+   if(UseMAStrategy && ArraySize(fastMA) >= 3 && IsStrategyEnabledForRegime(STRATEGY_MA))
    {
       bool bullishCross = fastMA[1] > slowMA[1] && fastMA[2] <= slowMA[2];
       bool bearishCross = fastMA[1] < slowMA[1] && fastMA[2] >= slowMA[2];
       
+      //--- Check MA distance
+      double maDistance = MathAbs(fastMA[1] - slowMA[1]) / data.pipSize;
+      if(maDistance < MA_DistanceMinimum)
+         bullishCross = bearishCross = false;
+      
       if(bullishCross)
       {
-         double maSlope = MathAbs(fastMA[1] - fastMA[2]) / data.pipSize;
+         int score = 35; // Enhanced base score
+         buyReasons += "MA Bullish Cross | ";
+         
+         //--- Check slope
+         double maSlope = (fastMA[1] - fastMA[2]) / data.pipSize;
          if(maSlope >= MA_SlopeMinimum)
          {
-            buySignalScore += 30;
-            buyReasons += "MA Bullish | ";
+            score += 10;
+            buyReasons += "Strong Slope | ";
          }
+         
+         //--- Check momentum
+         if(UseMomentumFilter && CheckMomentum(symbol, data.pipSize) > 0)
+         {
+            score += 10;
+            buyReasons += "Bullish Momentum | ";
+         }
+         
+         //--- Check breakout
+         if(UseBreakoutDetection && CheckBreakout(symbol, data.pipSize) > 0)
+         {
+            score += 10;
+            buyReasons += "Bullish Breakout | ";
+         }
+         
+         buySignalScore += score;
+         strategiesUsed++;
       }
       else if(bearishCross)
       {
-         double maSlope = MathAbs(fastMA[1] - fastMA[2]) / data.pipSize;
+         int score = 35; // Enhanced base score
+         sellReasons += "MA Bearish Cross | ";
+         
+         //--- Check slope
+         double maSlope = (fastMA[2] - fastMA[1]) / data.pipSize;
          if(maSlope >= MA_SlopeMinimum)
          {
-            sellSignalScore += 30;
-            sellReasons += "MA Bearish | ";
+            score += 10;
+            sellReasons += "Strong Slope | ";
          }
+         
+         //--- Check momentum
+         if(UseMomentumFilter && CheckMomentum(symbol, data.pipSize) < 0)
+         {
+            score += 10;
+            sellReasons += "Bearish Momentum | ";
+         }
+         
+         //--- Check breakout
+         if(UseBreakoutDetection && CheckBreakout(symbol, data.pipSize) < 0)
+         {
+            score += 10;
+            sellReasons += "Bearish Breakout | ";
+         }
+         
+         sellSignalScore += score;
+         strategiesUsed++;
       }
    }
    
-   //--- RSI Strategy
-   if(UseRSIStrategy && ArraySize(rsiBuf) >= 2)
+   //--- RSI Strategy (check regime)
+   if(UseRSIStrategy && ArraySize(rsiBuf) >= 2 && IsStrategyEnabledForRegime(STRATEGY_RSI))
    {
       if(rsiBuf[1] < RSI_Oversold && rsiBuf[0] > RSI_Oversold)
       {
          buySignalScore += 25;
          buyReasons += "RSI Oversold Bounce | ";
+         strategiesUsed++;
       }
       
       if(rsiBuf[1] > RSI_Overbought && rsiBuf[0] < RSI_Overbought)
       {
          sellSignalScore += 25;
          sellReasons += "RSI Overbought Fall | ";
+         strategiesUsed++;
       }
    }
    
-   //--- BB Strategy
-   if(UseBBStrategy && ArraySize(bbLower) >= 2)
+   //--- BB Strategy (check regime)
+   if(UseBBStrategy && ArraySize(bbLower) >= 2 && IsStrategyEnabledForRegime(STRATEGY_BB))
    {
       double close = iClose(symbol, PERIOD_CURRENT, 0);
       double closePrev = iClose(symbol, PERIOD_CURRENT, 1);
@@ -2089,35 +2189,54 @@ void CheckSymbolEntrySignals(int symbolIndex)
       {
          buySignalScore += 25;
          buyReasons += "BB Lower Bounce | ";
+         strategiesUsed++;
       }
       
       if(closePrev >= bbUpper[1] && close < bbUpper[0])
       {
          sellSignalScore += 25;
          sellReasons += "BB Upper Fall | ";
+         strategiesUsed++;
       }
    }
    
-   //--- MACD Strategy
-   if(UseMACDStrategy && ArraySize(macdMain) >= 3)
+   //--- MACD Strategy (check regime)
+   if(UseMACDStrategy && ArraySize(macdMain) >= 3 && IsStrategyEnabledForRegime(STRATEGY_MACD))
    {
       if(macdMain[1] > macdSignal[1] && macdMain[2] <= macdSignal[2])
       {
          buySignalScore += 20;
          buyReasons += "MACD Bullish | ";
+         strategiesUsed++;
       }
       
       if(macdMain[1] < macdSignal[1] && macdMain[2] >= macdSignal[2])
       {
          sellSignalScore += 20;
          sellReasons += "MACD Bearish | ";
+         strategiesUsed++;
       }
    }
    
-   //--- Process buy signal
-   if(buySignalScore >= MinSignalScore)
+   //--- Apply confluence bonus if multiple strategies agree (NEW in v4.0)
+   if(strategiesUsed >= 2)
    {
-      Print("=== BUY SIGNAL [", symbol, "] | Score: ", buySignalScore, " ===");
+      buySignalScore += (int)SignalConfluenceBonus;
+      sellSignalScore += (int)SignalConfluenceBonus;
+      if(buySignalScore > sellSignalScore)
+         buyReasons += "Multi-Strategy Confluence | ";
+      else
+         sellReasons += "Multi-Strategy Confluence | ";
+   }
+   
+   //--- Get regime-adjusted threshold (NEW in v4.0)
+   int threshold = GetRegimeAdjustedThreshold();
+   
+   //--- Process buy signal
+   if(buySignalScore >= threshold)
+   {
+      string regimeNames[] = {"STRONG_UPTREND", "STRONG_DOWNTREND", "RANGING_LOW_VOL", "RANGING_HIGH_VOL", "NEUTRAL"};
+      Print("=== BUY SIGNAL [", symbol, "] | Score: ", buySignalScore, " | Threshold: ", threshold, " | Regime: ", regimeNames[currentMarketRegime], " ===");
       Print("Reasons: ", buyReasons);
       
       if(OpenSymbolPosition(symbolIndex, ORDER_TYPE_BUY))
@@ -2129,9 +2248,10 @@ void CheckSymbolEntrySignals(int symbolIndex)
    }
    
    //--- Process sell signal
-   if(sellSignalScore >= MinSignalScore)
+   if(sellSignalScore >= threshold)
    {
-      Print("=== SELL SIGNAL [", symbol, "] | Score: ", sellSignalScore, " ===");
+      string regimeNames[] = {"STRONG_UPTREND", "STRONG_DOWNTREND", "RANGING_LOW_VOL", "RANGING_HIGH_VOL", "NEUTRAL"};
+      Print("=== SELL SIGNAL [", symbol, "] | Score: ", sellSignalScore, " | Threshold: ", threshold, " | Regime: ", regimeNames[currentMarketRegime], " ===");
       Print("Reasons: ", sellReasons);
       
       if(OpenSymbolPosition(symbolIndex, ORDER_TYPE_SELL))
@@ -2233,7 +2353,14 @@ double CalculateSymbolStopLoss(int symbolIndex, ENUM_ORDER_TYPE orderType, doubl
       double atrBuf[];
       ArraySetAsSeries(atrBuf, true);
       if(CopyBuffer(data.handleATR, 0, 0, 1, atrBuf) >= 1)
+      {
          slDistance = atrBuf[0] * ATR_SL_Multiplier;
+         
+         //--- Apply min/max bounds (NEW in v4.0)
+         double slPips = slDistance / data.pipSize;
+         if(slPips < MinSL_Pips) slDistance = MinSL_Pips * data.pipSize;
+         if(slPips > MaxSL_Pips) slDistance = MaxSL_Pips * data.pipSize;
+      }
       else
          slDistance = StopLossPips * data.pipSize;
    }
@@ -2261,7 +2388,14 @@ double CalculateSymbolTakeProfit(int symbolIndex, ENUM_ORDER_TYPE orderType, dou
       double atrBuf[];
       ArraySetAsSeries(atrBuf, true);
       if(CopyBuffer(data.handleATR, 0, 0, 1, atrBuf) >= 1)
+      {
          tpDistance = atrBuf[0] * ATR_TP_Multiplier;
+         
+         //--- Apply minimum TP (NEW in v4.0)
+         double tpPips = tpDistance / data.pipSize;
+         if(tpPips < (MinSL_Pips * 1.5)) // TP should be at least 1.5x SL minimum
+            tpDistance = (MinSL_Pips * 1.5) * data.pipSize;
+      }
       else
          tpDistance = TakeProfitPips * data.pipSize;
    }

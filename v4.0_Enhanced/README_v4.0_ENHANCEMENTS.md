@@ -18,7 +18,7 @@ ForexTrader v4.0 represents a **professional production-ready upgrade** that add
 
 **The Problem:**
 - v3.2 ran all 4 strategies simultaneously regardless of market conditions
-- Trend strategies failed in ranging markets (whips awls)
+- Trend strategies failed in ranging markets (whipsaws)
 - Mean reversion strategies failed in trending markets (chasing trends)
 - No intelligence about WHEN to use WHICH strategy
 
@@ -145,7 +145,7 @@ High Volatility (ATR = 40 pips):
 
 | Parameter | v3.2 Value | v4.0 Value | Impact |
 |-----------|------------|------------|--------|
-| MinSignalScore | 35 | 25 | +40% more signals |
+| MinSignalScore | 35 | 25 | -29% threshold, ~40% more signals |
 | CooldownMinutes | 3 | 1 | 3x faster response |
 | MaxDailyTrades | 50 | 100 | 2x capacity |
 | MA_SlopeMinimum | 5.0 pips | 3.0 pips | +40% sensitivity |
