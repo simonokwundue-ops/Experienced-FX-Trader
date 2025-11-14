@@ -1,0 +1,129 @@
+;+------------------------------------------------------------------+
+;|                  ForexTrader v3.2 Scalper Production             |
+;|                     High-Frequency Configuration                 |
+;+------------------------------------------------------------------+
+
+;=== Multi-Symbol Scalping (v3.2) ===
+TradeMultipleSymbols=true
+TradingSymbols=EURUSD,GBPUSD,USDJPY,AUDUSD
+MaxPositionsPerSymbol=3
+AllowHedging=true
+MaxTotalPositions=8
+MaxFloatingEquityPercent=5.0
+
+;=== Scalping Strategy Selection ===
+UseMAStrategy=true
+UseRSIStrategy=true
+UseBBStrategy=true
+UseMACDStrategy=true
+UseMomentumFilter=true
+UseBreakoutDetection=true
+MinSignalScore=20
+
+;=== Multi-Timeframe Analysis ===
+UseMultiTimeframe=false
+TimeFrame1=16385
+TimeFrame2=16386
+TimeFrame3=16388
+MinTFConfirmation=2
+
+;=== Fast Moving Average Scalping ===
+FastMA_Period=5
+SlowMA_Period=20
+MA_Method=1
+MA_Price=0
+MA_SlopeMinimum=2.0
+
+;=== RSI Strategy ===
+RSI_Period=14
+RSI_Oversold=35.0
+RSI_Overbought=65.0
+RSI_Price=0
+
+;=== Bollinger Bands Strategy ===
+BB_Period=20
+BB_Deviation=2.0
+BB_AppliedPrice=0
+
+;=== MACD Strategy ===
+MACD_FastEMA=12
+MACD_SlowEMA=26
+MACD_Signal=9
+MACD_Price=0
+
+;=== Scalping Signal Filters ===
+UseADXFilter=false
+ADX_Period=14
+ADX_Minimum=15.0
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=3.0
+ATR_MaximumPips=50.0
+
+;=== Momentum & Breakout Detection ===
+MomentumBars=3
+MinMomentumPips=3.0
+BreakoutBars=5
+BreakoutMinPips=5.0
+
+;=== Portfolio Risk Management ===
+MaxPortfolioRisk=10.0
+BaseRiskPercent=1.0
+UseDynamicRisk=true
+MinRiskPercent=0.5
+MaxRiskPercent=2.0
+MaxDrawdownPercent=30.0
+DailyDrawdownPercent=5.0
+
+;=== Scalping Position Sizing ===
+StopLossPips=10.0
+TakeProfitPips=15.0
+UseATRSizing=false
+ATR_SL_Multiplier=1.0
+ATR_TP_Multiplier=1.5
+MaxSpreadPips=2.0
+
+;=== Scalping Position Management ===
+UseBreakeven=true
+BreakevenTriggerPips=5.0
+BreakevenOffsetPips=1.0
+UsePartialTP=false
+PartialTP_Pips=8.0
+PartialTP_Percent=50.0
+UseTrailingStop=true
+TrailingStopPips=8.0
+TrailingStepPips=2.0
+TrailingActivationPips=6.0
+
+;=== Scalping Trading Controls ===
+MaxDailyTrades=200
+MaxConcurrentPositions=8
+CooldownMinutes=0
+SeparateCooldownByDirection=true
+PostCloseCooldownMinutes=0
+
+;=== Session Filters ===
+UseSessionFilter=false
+TradeAsianSession=true
+TradeLondonSession=true
+TradeNYSession=true
+AsianStartHour=0
+AsianEndHour=8
+LondonStartHour=7
+LondonEndHour=16
+NYStartHour=12
+NYEndHour=21
+
+;=== Money Management ===
+MaxLotSize=5.0
+MinLotSize=0.01
+UseCompounding=true
+UseFixedLot=false
+FixedLotSize=0.01
+
+;=== Advanced Settings ===
+MagicNumber=234568
+TradeComment=ForexTrader_v3.2_Scalper
+Slippage=50
+MaxRetries=3
+RetryDelayMs=500
