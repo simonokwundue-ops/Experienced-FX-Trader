@@ -9,18 +9,16 @@
    - Click: File → Open Data Folder
    - Navigate to: MQL5 → Experts
 
-2. **Copy these 5 files to the Experts folder:**
-   - QuantumForexTrader_Scalper.mq5
-   - QuantumSignals.mqh
-   - QuantumAnalysis.mqh
-   - QuantumRiskManager.mqh
-   - BinaryEncoder.mqh
+2. **Copy the QuantumForexTrader folder to the Experts directory:**
+   - Copy the entire `MQL5/Experts/QuantumForexTrader/` folder
+   - Paste into your MT5 Experts folder
+   - Final path: `[MT5_DATA]\MQL5\Experts\QuantumForexTrader\`
 
 ### Step 2: Compile (1 minute)
 
 1. Press **F4** in MT5 to open MetaEditor
-2. In Navigator, find **QuantumForexTrader_Scalper.mq5**
-3. Double-click to open it
+2. In Navigator, expand **Experts** → **QuantumForexTrader**
+3. Double-click **QuantumForexTrader_Scalper.mq5** to open it
 4. Press **F7** to compile
 5. Check bottom panel: Should show "**0 error(s), 0 warning(s)**"
 6. Close MetaEditor
@@ -29,7 +27,7 @@
 
 1. Open **EUR/USD** chart in MT5
 2. Change timeframe to **H1** (1 Hour)
-3. In Navigator, expand "Expert Advisors"
+3. In Navigator, expand "Expert Advisors" → "QuantumForexTrader"
 4. **Drag** QuantumForexTrader_Scalper onto the chart
 5. In the dialog that appears:
    - **Common tab**: Check "Allow Algo Trading" ✓

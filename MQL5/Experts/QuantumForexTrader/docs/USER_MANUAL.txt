@@ -46,21 +46,28 @@ Step-by-Step Installation:
                  [BROKER_ID]\MQL5\
 
 2. COPY EA FILES
-   Copy ALL files to the Experts folder:
+   Copy the entire QuantumForexTrader folder to the Experts directory:
    
-   Destination: C:\Users\User\AppData\Roaming\MetaQuotes\Terminal\
-                D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Experts\
+   Source: MQL5\Experts\QuantumForexTrader\
    
-   Files to copy:
-   - QuantumForexTrader_Scalper.mq5 (Main EA file)
-   - QuantumSignals.mqh (Signal generation)
-   - QuantumAnalysis.mqh (Market analysis)
-   - QuantumRiskManager.mqh (Risk management)
-   - BinaryEncoder.mqh (Binary conversion)
+   Destination: C:\Users\[User]\AppData\Roaming\MetaQuotes\Terminal\
+                [BROKER_ID]\MQL5\Experts\QuantumForexTrader\
+   
+   Directory structure:
+   QuantumForexTrader/
+   ├── QuantumForexTrader_Scalper.mq5 (Main EA file)
+   ├── core/
+   │   └── QuantumRiskManager.mqh (Risk management)
+   ├── strategies/
+   │   ├── QuantumAnalysis.mqh (Market analysis)
+   │   └── QuantumSignals.mqh (Signal generation)
+   ├── include/
+   │   └── BinaryEncoder.mqh (Binary conversion)
+   └── docs/ (All documentation files)
 
 3. COMPILE THE EA
    - Open MetaEditor (F4 in MT5 or click "Tools" -> "MetaQuotes Language Editor")
-   - Navigate to "Experts" folder in Navigator
+   - Navigate to "Experts" → "QuantumForexTrader" folder in Navigator
    - Double-click "QuantumForexTrader_Scalper.mq5"
    - Click "Compile" button (F7) or "Tools" -> "Compile"
    - Check "Errors" tab at bottom - should show "0 error(s), 0 warning(s)"
@@ -69,7 +76,7 @@ Step-by-Step Installation:
 4. REFRESH MT5
    - Return to MT5 platform
    - Right-click in "Navigator" window -> "Refresh"
-   - Find "QuantumForexTrader_Scalper" under "Expert Advisors"
+   - Find "QuantumForexTrader" → "QuantumForexTrader_Scalper" under "Expert Advisors"
 
 ================================================================================
 3. EA OVERVIEW AND FUNCTIONALITY

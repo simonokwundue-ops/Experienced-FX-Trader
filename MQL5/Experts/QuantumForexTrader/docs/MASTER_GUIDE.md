@@ -18,33 +18,41 @@
 
 This package includes a complete quantum-inspired forex trading EA for MetaTrader 5:
 
-### Core Files (5)
-- `QuantumForexTrader_Scalper.mq5` - Main EA
-- `QuantumSignals.mqh` - Signal generation
-- `QuantumAnalysis.mqh` - Market analysis
-- `QuantumRiskManager.mqh` - Risk management
-- `BinaryEncoder.mqh` - Binary encoding
-
-### Documentation (5)
-- `USER_MANUAL.txt` - Complete manual (26 KB)
-- `QUICKSTART_QUANTUM.md` - 5-minute setup
-- `TESTING_GUIDE.md` - Testing procedures
-- `CONFIGURATION_GUIDE.md` - Parameter reference
-- `QUANTUM_EA_README.md` - Technical overview
+### Directory Structure
+```
+MQL5/Experts/QuantumForexTrader/
+├── QuantumForexTrader_Scalper.mq5    # Main EA file
+├── core/                              # Risk management
+│   └── QuantumRiskManager.mqh
+├── strategies/                        # Analysis and signals
+│   ├── QuantumAnalysis.mqh
+│   └── QuantumSignals.mqh
+├── include/                           # Utilities
+│   └── BinaryEncoder.mqh
+└── docs/                              # All documentation
+    ├── USER_MANUAL.txt
+    ├── MASTER_GUIDE.md (this file)
+    ├── QUICKSTART_QUANTUM.md
+    ├── TESTING_GUIDE.md
+    ├── CONFIGURATION_GUIDE.md
+    ├── QUANTUM_EA_README.md
+    └── IMPLEMENTATION_SUMMARY.md
+```
 
 ---
 
 ## ⚡ Ultra-Quick Start (3 Steps)
 
 ### 1. Install Files
-Copy all 5 .mq5/.mqh files to:
+Copy the entire QuantumForexTrader folder to:
 ```
-C:\Users\User\AppData\Roaming\MetaQuotes\Terminal\
-[YOUR_BROKER_ID]\MQL5\Experts\
+C:\Users\[User]\AppData\Roaming\MetaQuotes\Terminal\
+[YOUR_BROKER_ID]\MQL5\Experts\QuantumForexTrader\
 ```
 
 ### 2. Compile
 - Open MetaEditor (F4)
+- Navigate to Experts → QuantumForexTrader
 - Open `QuantumForexTrader_Scalper.mq5`
 - Press F7 to compile
 - Should show: **0 error(s), 0 warning(s)** ✅

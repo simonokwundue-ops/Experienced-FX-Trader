@@ -12,9 +12,9 @@
 #include <Trade\Trade.mqh>
 #include <Trade\PositionInfo.mqh>
 #include <Trade\AccountInfo.mqh>
-#include "QuantumSignals.mqh"
-#include "QuantumAnalysis.mqh"
-#include "QuantumRiskManager.mqh"
+#include "strategies\\QuantumSignals.mqh"
+#include "strategies\\QuantumAnalysis.mqh"
+#include "core\\QuantumRiskManager.mqh"
 
 //+------------------------------------------------------------------+
 //| Input Parameters                                                  |

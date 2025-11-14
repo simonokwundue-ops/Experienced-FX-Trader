@@ -8,7 +8,7 @@
 #property version   "1.00"
 #property strict
 
-#include "BinaryEncoder.mqh"
+#include "..\\include\\BinaryEncoder.mqh"
 
 //+------------------------------------------------------------------+
 //| Quantum Market State Structure                                   |
