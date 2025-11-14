@@ -50,14 +50,14 @@ private:
     //+------------------------------------------------------------------+
     //| Simple hash function for generating pseudo-quantum states       |
     //+------------------------------------------------------------------+
-    ulong SimpleHash(const string &input)
+    ulong SimpleHash(const string &str)
     {
         ulong hash = 5381;
-        int len = StringLen(input);
+        int len = StringLen(str);
         
         for(int i = 0; i < len; i++)
         {
-            ushort ch = StringGetCharacter(input, i);
+            ushort ch = StringGetCharacter(str, i);
             hash = ((hash << 5) + hash) + ch;
         }
         
