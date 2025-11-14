@@ -62,12 +62,21 @@ Features:
 2. **[Complete User Guide](README_v3.md)** - Full documentation (400+ lines)
 3. **[Technical Implementation](IMPLEMENTATION_V3.md)** - All bug fixes detailed (550+ lines)
 4. **[Project Summary](PROJECT_SUMMARY_V3.md)** - Executive overview
+5. **[Strategy Tester Guide](STRATEGY_TESTER_GUIDE.md)** - Multi-pair/timeframe testing with .ini files
 
 ### Configuration Files
 Pre-made settings in `Config/` directory:
 - `ForexTrader_v3_Conservative.set` - Low risk (1% per trade)
 - `ForexTrader_v3_Moderate.set` - Balanced (2% per trade)
 - `ForexTrader_v3_Multi_Moderate.set` - Multi-strategy balanced
+
+### Strategy Tester .ini Files
+Pre-configured testing setups for all EA variants:
+- `ForexTrader_EA_Base_Version.ini` - Base version testing
+- `ForexTrader_v1.2_Tuned_By_User.ini` - v1.2 testing
+- `ForexTrader_v2_MultiStrategy.ini` - v2 testing
+- `ForexTrader_v3_Production.ini` - v3 Production testing ✅
+- `ForexTrader_v3_MultiStrategy_Production.ini` - v3 Multi testing ✅
 
 ## What Was Fixed in v3.0
 
@@ -180,7 +189,25 @@ Before live trading:
 - [ ] Broker spreads acceptable
 - [ ] All parameters understood
 
-[Complete testing guide →](README_v3.md#testing)
+### Strategy Tester Configuration Files
+
+**NEW:** .ini files for MT5 Strategy Tester are now available for all EA variants!
+
+Each EA now has a corresponding .ini file for systematic testing:
+- `ForexTrader_EA_Base_Version.ini`
+- `ForexTrader_v1.2_Tuned_By_User.ini`
+- `ForexTrader_v2_MultiStrategy.ini`
+- `ForexTrader_v3_Production.ini` ✅ Recommended
+- `ForexTrader_v3_MultiStrategy_Production.ini` ✅ Recommended
+
+These files include:
+- Multi-pair testing configurations
+- Multi-timeframe setups
+- Optimization parameter ranges
+- Recommended test periods and settings
+
+[Complete testing guide with .ini files →](STRATEGY_TESTER_GUIDE.md)
+[User documentation →](README_v3.md#testing)
 
 ## Support & Resources
 
