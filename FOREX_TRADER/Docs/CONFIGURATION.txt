@@ -1,0 +1,31 @@
+See USAGE_INSTRUCTIONS.txt Section 4 for complete configuration guide.
+
+Quick Configuration Summary:
+
+KEY PARAMETERS TO ADJUST:
+
+1. QuantumConfidenceThreshold (default: 60%)
+   - Most important parameter
+   - Higher = fewer, higher quality trades
+   - Lower = more trades, lower quality
+   
+2. BaseRiskPercent (default: 1.5%)
+   - Risk per trade
+   - Adjust based on risk tolerance
+   
+3. MinSignalScore (default: 60)
+   - Minimum combined signal score
+   - Increase for higher quality signals
+   
+4. MaxConcurrentPositions (default: 5)
+   - Maximum open positions
+   - Reduce for conservative trading
+
+PRESET CONFIGURATIONS:
+
+Load from Config folder:
+- QuantumForexTrader_Base.set (Balanced)
+- QuantumForexTrader_Scalper.set (Fast trading)
+
+For detailed parameter descriptions, ranges, and optimization
+strategies, see full configuration guide in USAGE_INSTRUCTIONS.txt
