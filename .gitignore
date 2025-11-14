@@ -1,0 +1,61 @@
+# Temporary files
+/tmp/
+*.tmp
+*.temp
+
+# MetaTrader 5 compiled files
+*.ex5
+*.ex4
+
+# MetaTrader 5 backtest files
+*.tst
+*.hst
+*.fxt
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+# MetaTrader compiled files
+*.ex5
+*.ex4
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+~*
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build artifacts
+build/
+dist/
+
+# Build directories
+build/
+dist/
+
+# Test results
+*.csv
+backtest_results/
+
+# Python cache (from PDF extraction script)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Temporary extraction files
+/tmp/
