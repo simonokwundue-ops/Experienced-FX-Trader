@@ -1,0 +1,60 @@
+//+------------------------------------------------------------------+
+//|                        ForexTrader_v3_Moderate.set               |
+//|                   Moderate Settings - Balanced Profile           |
+//+------------------------------------------------------------------+
+
+; Strategy Settings
+UseAdaptiveMA=true
+FastMA_Period=10
+SlowMA_Period=50
+MA_Method=1
+MA_Price=0
+
+; Signal Filters
+UseADXFilter=true
+ADX_Period=14
+ADX_Minimum=20.0
+UseATRFilter=true
+ATR_Period=14
+ATR_MinimumPips=10.0
+ATR_MaximumPips=100.0
+MA_SlopeMinimum=4.0
+MA_DistanceMinimum=2.5
+
+; Risk Management
+RiskPercent=2.0
+StopLossPips=40.0
+TakeProfitPips=80.0
+UseDynamicSLTP=true
+ATR_SL_Multiplier=2.0
+ATR_TP_Multiplier=4.0
+MaxDrawdownPercent=25.0
+MaxSpreadPips=5.0
+
+; Position Management
+UseTrailingStop=true
+TrailingStopPips=30.0
+TrailingStepPips=5.0
+TrailingActivationPips=20.0
+UseBreakeven=true
+BreakevenTriggerPips=20.0
+BreakevenOffsetPips=2.0
+
+; Money Management
+MaxLotSize=5.0
+MinLotSize=0.01
+UseFixedLot=false
+
+; Trading Controls
+CooldownMinutes=15
+SeparateCooldownByDirection=true
+MaxDailyTrades=8
+MaxConcurrentPositions=2
+UseTradingHours=false
+
+; Advanced Settings
+MagicNumber=123456
+TradeComment=ForexTrader_v3_Moderate
+Slippage=30
+MaxRetries=3
+RetryDelayMs=1000
