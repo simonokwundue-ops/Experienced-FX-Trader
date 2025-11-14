@@ -28,10 +28,13 @@ struct QuantumMarketState
 class CQuantumPhaseEstimator
 {
 private:
-    static const int DEFAULT_QUBITS = 22;
-    static const int SHOTS = 3000;
-    static const int MAX_STATES = 100;
-    static const int PRICE_HISTORY = 256;
+    enum Constants
+    {
+        DEFAULT_QUBITS = 22,
+        SHOTS = 3000,
+        MAX_STATES = 100,
+        PRICE_HISTORY = 256
+    };
     
     struct ProbabilityState
     {
@@ -266,11 +269,10 @@ public:
                 if(pos < StringLen(m_states[i].state))
                 {
                     ushort ch = StringGetCharacter(m_states[i].state, pos);
-                    string charStr = ShortToString(ch);
                     
-                    if(charStr == "1")
+                    if(ch == '1')
                         weightedOnes += m_states[i].probability;
-                    else
+                    else if(ch == '0')
                         weightedZeros += m_states[i].probability;
                 }
             }

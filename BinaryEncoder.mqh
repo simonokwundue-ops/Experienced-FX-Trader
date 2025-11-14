@@ -59,10 +59,9 @@ public:
         for(int i = 0; i < length; i++)
         {
             ushort ch = StringGetCharacter(binary, i);
-            string charStr = ShortToString(ch);
-            if(charStr == "1")
+            if(ch == '1')
                 ones++;
-            else if(charStr == "0")
+            else if(ch == '0')
                 zeros++;
         }
         
