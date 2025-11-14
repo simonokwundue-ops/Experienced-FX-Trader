@@ -62,6 +62,8 @@ Experienced-FX-Trader/
 
 **To install:** Simply copy the entire `MQL5/` folder to your MT5 Data Folder.
 
+**📖 New to this structure?** See the [Migration Guide](MIGRATION_GUIDE.md) for detailed installation instructions and FAQs.
+
 ## Quick Start
 
 **New users start here:** [v3.2 User Guide](README_v3.2.md) | [v3.0 Quick Start](QUICKSTART_v3.md)
