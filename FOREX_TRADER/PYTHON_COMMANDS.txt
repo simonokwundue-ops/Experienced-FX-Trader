@@ -1,0 +1,113 @@
+===========================================
+QuantumForexTrader - Python Integration
+===========================================
+
+NOTE: Python integration is OPTIONAL. The EA works fully without it.
+      Python provides advanced quantum calculations but is not required.
+
+===========================================
+INSTALLATION
+===========================================
+
+1. Install Python 3.8 or higher:
+   https://www.python.org/downloads/
+
+2. Add Python to System PATH during installation
+
+3. Install required packages:
+   Open Command Prompt or PowerShell and run:
+
+   pip install MetaTrader5
+   pip install qiskit qiskit-aer
+   pip install numpy
+   pip install pandas
+   pip install pycryptodome
+   pip install matplotlib
+
+===========================================
+RUNNING PYTHON SCRIPTS
+===========================================
+
+Option 1 - Using Batch File (Easiest):
+---------------------------------------
+Double-click: run_quantum_python.bat
+
+Option 2 - PowerShell Command:
+-------------------------------
+cd "C:\Path\To\FOREX_TRADER"
+python Python\quantum_analysis.py
+
+Option 3 - Command Prompt:
+---------------------------
+cd C:\Path\To\FOREX_TRADER
+python Python\quantum_analysis.py
+
+Option 4 - With Visualization:
+--------------------------------
+python Python\quantum_visual.py
+
+===========================================
+PYTHON SCRIPT USAGE
+===========================================
+
+The quantum analysis script will:
+1. Connect to MetaTrader 5
+2. Get historical price data
+3. Perform quantum phase estimation
+4. Calculate probability distributions
+5. Save results to CSV file
+
+Results are saved in:
+MT5_Data_Folder\MQL5\Files\QuantumExchange\
+
+===========================================
+INTEGRATION WITH EA
+===========================================
+
+To enable Python integration in EA:
+1. Set UsePythonIntegration=true in EA inputs
+2. Ensure MT5 is running
+3. Run Python script manually or via Task Scheduler
+4. EA will read results from CSV files
+
+Data Exchange Path:
+C:\Users\[YourUsername]\AppData\Roaming\MetaQuotes\Terminal\[TerminalID]\MQL5\Files\QuantumExchange\
+
+===========================================
+TROUBLESHOOTING
+===========================================
+
+If Python integration doesn't work:
+1. Verify Python is in system PATH
+2. Check all packages are installed
+3. Ensure MT5 is running
+4. Check file permissions in MT5 Files directory
+5. Review EA logs for error messages
+
+Remember: EA works standalone without Python!
+
+===========================================
+POWERSHELL ONE-LINER
+===========================================
+
+For quick testing from any directory:
+python "$(Split-Path $MyInvocation.MyCommand.Path)\Python\quantum_analysis.py"
+
+Or with full path:
+python "C:\Program Files\MetaTrader 5\MQL5\Experts\FOREX_TRADER\Python\quantum_analysis.py"
+
+===========================================
+SCHEDULED EXECUTION
+===========================================
+
+To run Python analysis every hour:
+
+1. Open Task Scheduler
+2. Create New Task
+3. Set Trigger: Daily, repeat every 1 hour
+4. Set Action: Run program
+   Program: python.exe
+   Arguments: "C:\...\FOREX_TRADER\Python\quantum_analysis.py"
+5. Save and enable task
+
+===========================================

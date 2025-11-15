@@ -1,0 +1,435 @@
+Introduction
+Imagine being able to analyze all possible market states simultaneously. Not two or three scenarios, as in classical technical analysis, but all possible developments simultaneously. Sounds like science fiction? Welcome to the world of quantum computing for trading!
+
+While most traders still rely on classic indicators and patterns, quantum computers open up completely new horizons for us. With the help of the Qiskit library and quantum computer from IBM, we can look beyond conventional technical analysis and explore the market at a quantum level, where every possible price movement exists in a state of superposition.
+
+But let's put aside the loud statements and look at the facts. Quantum computing is not a magic wand that solves all trading problems. It is a powerful tool that requires a deep understanding of both financial markets and quantum mechanics. And this is where the fun begins.
+
+In this article, we will look at the practical implementation of quantum market analysis using a combination of MetaTrader 5 and Qiskit. We will create a system capable of analyzing historical data through the prism of quantum states and attempt to look beyond the market event horizon. Our approach combines classical probability theory, quantum phase estimation (QPE), and modern machine learning methods.
+
+Why did this become possible now? First, quantum computers have reached a level of development where they can be used to solve practical problems. Second, libraries like Qiskit have emerged that make quantum computing accessible to ordinary developers. And third, we have learned to effectively transform financial data into quantum states.
+
+Our experiment began with a simple question: can we use quantum superposition to simultaneously analyze all possible price paths? The answer turned out to be so intriguing that it turned into a full-fledged study, which I want to share with the MQL5 community.
+
+In the following sections, we will dive into the implementation details, review the code, analyze the results, and perhaps look into the future of algorithmic trading. Fasten your seatbelts – we are about to embark on a fascinating journey into the world where quantum mechanics meets financial markets.
+
+
+Fundamentals of quantum computing for time series analysis
+When we talk about applying quantum computing to time series analysis, we are effectively moving from the classical representation of price as a one-dimensional quantity to a multidimensional quantum state space. In conventional analysis, we can consider only one state of the system at any given time. In the quantum world, we work with a superposition of all possible states simultaneously.
+
+Imagine that every price movement is not just a number, but a quantum bit (qubit) that can be in a superposition of "rising" and "falling" states. This allows us to analyze not only what happened, but also all possible scenarios that could have happened, with their corresponding probabilities.
+
+# Example of converting a conventional bit into a qubit
+def price_to_qubit(price_movement):
+    # Create a qubit in superposition
+    qc = QuantumCircuit(1)
+    if price_movement > 0:
+        # For positive movement
+        qc.h(0)  # Hadamard transform
+    else:
+        # For negative movement
+        qc.x(0)  # Invert the state
+        qc.h(0)  # Create a superposition
+    return qc
+Quantum Phase Estimation (QPE) in the context of financial data
+Quantum Phase Estimation (QPE) is a fundamental algorithm in quantum computing that underlies many quantum algorithms, including the famous Shor's algorithm. In the context of financial market analysis, QPE is particularly important because it allows us to work with market data at the quantum level, where price movement information is represented as phase states of a quantum system. The essence of the method is that we can encode a price time series as a unitary operator and then use a quantum circuit to estimate its eigenvalues, which carry information about hidden patterns and periodicities in the data.
+
+At a deeper mathematical level, QPE works with the U unitary operator and its eigenvector |ψ⟩, for which U|ψ⟩ = e^(2πiφ)|ψ⟩ holds, where φ is the unknown phase we want to estimate. In the context of financial markets, the U operator is constructed based on historical price movement data, where the φ phase contains information about probable future market states. Each eigenvalue of such an operator can be interpreted as a separate "scenario" for the development of the market situation, and the amplitude of the corresponding eigenvector indicates the probability of this scenario being realized.
+
+The QPE process involves three key steps. We first initialize two registers: a phase register containing n qubits in superposition (via Hadamard gates) and a target register containing the eigenvector of the U operator. We then apply a sequence of controlled operations U^(2^j), where j runs from 0 to n-1. Finally, we apply the inverse quantum Fourier transform to the phase register, which allows us to extract an estimate of φ. As a result of these operations, we obtain a quantum state, the measurement of which gives us an approximation to the value of the φ phase with an accuracy depending on the number of qubits used.
+
+The mathematical magic of QPE
+
+Quantum phase estimation is not just an algorithm, it is a quantum microscope for studying the fine structure of market movements. It is based on the amazing ability of quantum systems to be in multiple states simultaneously. Imagine that you can simultaneously trace all possible price development paths and choose the most likely ones.
+
+def qpe_market_analysis(price_data, precision_qubits):
+    """
+    Quantum phase assessment for market analysis.
+    
+    price_data - historical price data
+    precision_qubits - number of qubits for precision estimation
+    """
+    # Create a quantum orchestra
+    qr = QuantumRegister(precision_qubits + 1, 'price_register')
+    cr = ClassicalRegister(precision_qubits, 'measurement')
+    qc = QuantumCircuit(qr, cr, name='Market_QPE')
+    
+    # Prepare the quantum register - set up the instruments 
+    for q in range(precision_qubits):
+        qc.h(q)  # Create a quantum superposition
+    qc.x(precision_qubits)  # Set the target qubit
+    
+    # Quantum magic starts here
+    # Each controlled phase change is like a new note in our market symphony
+    for i, price in enumerate(price_data):
+        # Normalize the price and transform it into a quantum phase
+        normalized_price = price / max(price_data)
+        phase_angle = 2 * np.pi * normalized_price
+        
+        # Apply controlled phase shift
+        qc.cp(phase_angle, i, precision_qubits)
+    
+    return qc
+Quantum encoding: Transforming prices into quantum states
+
+One of the most exciting parts of our approach is the transformation of classical price data into quantum states. It is like translating a musical score into quantum mechanics:
+
+def price_series_to_quantum_state(price_series):
+    """
+    21st-century alchemy: Transforming price data into quantum states
+    """
+    # Stage one: Quantum hashing
+    binary_sequence = sha256_to_binary(str(price_series).encode())
+    
+    # Create a quantum circuit - our quantum canvas
+    n_qubits = len(binary_sequence)
+    qc = QuantumCircuit(n_qubits, name='Price_State')
+    
+    # Each bit of price becomes a quantum state
+    for i, bit in enumerate(binary_sequence):
+        if bit == '1':
+            qc.x(i)  # Quantum X-gate - like a musical note
+        # Add quantum entanglement
+        if i > 0:
+            qc.cx(i-1, i)  # Create quantum correlations
+    
+    return qc
+Discrete logarithm: A quantum detective guarding the market
+
+We have another powerful tool in our arsenal: the quantum algorithm of a discrete logarithm. It is like a quantum detective, able to find hidden patterns in the chaos of market movements:
+
+def quantum_dlog_market_analysis(a, N, num_qubits):
+    """
+    Quantum detective for finding hidden market patterns
+    
+    a - logarithm base (usually related to market characteristics)
+    N - module (defines the search space)
+    num_qubits - number of qubits for calculations
+    """
+    # Create a quantum circuit to search for periods
+    qc = qpe_dlog(a, N, num_qubits)
+    
+    # Launch the quantum detective
+    simulator = AerSimulator()
+    job = simulator.run(qc, shots=3000)  # 3000 quantum experiments
+    result = job.result()
+    
+    # Analyze the patterns found
+    counts = result.get_counts()
+    patterns = analyze_dlog_results(counts)
+    
+    return patterns
+Data preprocessing: Preparation for quantum analysis
+
+The quality of quantum analysis directly depends on the quality of the input data. Our approach to data acquisition is similar to fine-tuning a sensitive scientific instrument:
+
+def get_market_data(symbol="EURUSD", timeframe=mt5.TIMEFRAME_D1, n_candles=256):
+    """
+    Quantum-compatible market data acquisition
+    
+    256 candles is not just a number. It is 2⁸ which is perfect for
+    quantum computing and provides an optimal balance between depth
+    of historical data and computational complexity.
+    """
+    # Initialize the trading terminal
+    if not mt5.initialize():
+        raise RuntimeError("Quantum paradox: MT5 not initialized")
+    
+    # Obtain data with quantum precision
+    rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, n_candles)
+    if rates is None:
+        raise ValueError("Wave function collapse: No data received")
+    
+    # Convert to pandas DataFrame for easier handling
+    df = pd.DataFrame(rates)
+    
+    # Additional preprocessing for quantum analysis
+    df['quantum_ready'] = normalize_for_quantum(df['close'])
+    
+    return df
+Why exactly 256 candles?
+
+The selection of 256 candles for analysis is not random, but the result of a deep understanding of quantum computing. The number of 256 (2⁸) has a special meaning in the quantum world:
+
+Optimal dimensionality: 256 states can be represented using 8 qubits, which provides a good balance between the amount of information and the complexity of the quantum circuit.
+Computational efficiency: Quantum algorithms work most efficiently when working with powers of two.
+Sufficient depth of analysis: 256 candles provide enough data to identify both short-term and medium-term patterns.
+Quantum coherence: More data can lead to loss of quantum coherence and increase the complexity of computations without significantly improving the results.
+Quantum analysis opens up new horizons in understanding market dynamics. This is not a replacement for classical technical analysis, but its evolutionary development, allowing us to see the market in a completely new light. In the following sections, we will look at the practical application of these theoretical concepts and see how quantum algorithms help make more accurate trading decisions.
+
+
+Analysis of quantum market states
+Now that we have covered the theoretical framework and data preparation, it is time to dive into the most intriguing part of our research — the practical implementation of quantum market analysis. Here theory meets practice, and abstract quantum states are transformed into real trading signals.
+
+Matrix of probability states
+
+The first step in our analysis is to create and interpret a matrix of market probability states:
+
+def analyze_market_quantum_state(price_binary, num_qubits=22):
+    """
+    A deep analysis of the quantum state of the market
+    
+    price_binary - binary representation of price movements
+    num_qubits - number of qubits to analyze
+    """
+    # Constants for market analysis
+    a = 700000000  # Basic parameter for quantum transformation
+    N = 170000000  # Module for discrete logarithm
+    
+    try:
+        # Create a quantum circuit for analysis
+        qc = qpe_dlog(a, N, num_qubits)
+        
+        # Run on a quantum simulator with increased accuracy
+        simulator = AerSimulator(method='statevector')
+        compiled_circuit = transpile(qc, simulator, optimization_level=3)
+        job = simulator.run(compiled_circuit, shots=3000)
+        result = job.result()
+        
+        # Get the probability distribution of states
+        counts = result.get_counts()
+        
+        # Find the most probable state
+        best_match = max(counts, key=counts.get)
+        dlog_value = int(best_match, 2)
+        
+        return dlog_value, counts
+        
+    except Exception as e:
+        print(f"Quantum anomaly in analysis: {str(e)}")
+        return None, None
+Interpretation of quantum measurements
+
+One of the most challenging aspects of quantum analysis is the interpretation of measurement results. We have developed a special system for decoding quantum states into market signals:
+
+def decode_quantum_measurements(quantum_results, confidence_threshold=0.6):
+    """
+    Transforming quantum measurements into trading signals
+    
+    quantum_results - results of quantum measurements
+    confidence_threshold - confidence threshold for signal generation
+    """
+    try:
+        total_measurements = sum(quantum_results.values())
+        market_phases = {}
+        
+        # Analyze each quantum state
+        for state, count in quantum_results.items():
+            probability = count / total_measurements
+            if probability >= confidence_threshold:
+                # Decode the quantum state
+                phase_value = decode_quantum_phase(state)
+                market_phases[state] = {
+                    'probability': probability,
+                    'phase': phase_value,
+                    'market_direction': interpret_phase(phase_value)
+                }
+        
+        return market_phases
+        
+    except Exception as e:
+        print(f"Decoding error: {str(e)}")
+        return None
+Evaluation of prediction accuracy
+
+To evaluate the efficiency of our quantum analysis, we developed a prediction verification system:
+
+def verify_quantum_predictions(predictions, actual_data):
+    """
+    Quantum prediction verification system
+    
+    predictions - predicted quantum states
+    actual_data - actual market movements
+    """
+    verification_results = {
+        'total_predictions': 0,
+        'correct_predictions': 0,
+        'accuracy': 0.0,
+        'confidence_correlation': []
+    }
+    
+    for pred, actual in zip(predictions, actual_data):
+        verification_results['total_predictions'] += 1
+        if pred['direction'] == actual['direction']:
+            verification_results['correct_predictions'] += 1
+            
+        # Analyze the correlation between prediction confidence and accuracy
+        verification_results['confidence_correlation'].append({
+            'confidence': pred['confidence'],
+            'correct': pred['direction'] == actual['direction']
+        })
+    
+    verification_results['accuracy'] = (
+        verification_results['correct_predictions'] / 
+        verification_results['total_predictions']
+    )
+    
+    return verification_results
+Optimization of quantum circuit parameters
+
+During the research, we discovered that the accuracy of predictions strongly depends on the parameters of the quantum circuit. Here is our approach to optimization:
+
+def optimize_quantum_parameters(historical_data, test_period=30):
+    """
+    Optimization of quantum circuit parameters
+    
+    historical_data - historical data for training
+    test_period - period for testing parameters
+    """
+    optimization_results = {}
+    
+    # Test different parameter configurations
+    for num_qubits in range(18, 24, 2):
+        for shots in [1000, 2000, 3000, 4000]:
+            results = test_quantum_configuration(
+                historical_data,
+                num_qubits=num_qubits,
+                shots=shots,
+                test_period=test_period
+            )
+            
+            optimization_results[f"qubits_{num_qubits}_shots_{shots}"] = results
+    
+    return find_optimal_configuration(optimization_results)
+
+
+Practical application and results
+After developing the theoretical basis and implementing the code, we began testing the system on real market data. Of particular interest is the analyze_from_point function, which allows us to analyze market data using quantum computing.
+
+EURUSD movement analysis
+
+As a first example, let's look at the analysis of the EURUSD pair movement on the daily timeframe. We took a sample of 256 candles and performed quantum analysis to predict price movement over the next 10 days.
+
+The results turned out to be quite interesting. The system detected the formation of a reversal pattern that classical indicators missed. The binary sequence of recent price movements showed an unusual distribution, with states indicating a high probability of a trend reversal dominating.
+
+Quantum analysis of pivot points
+
+The analysis of historical trend reversal points proved particularly revealing. Our system has demonstrated the ability to identify potential reversal zones in advance with an accuracy of approximately 65%. This is achieved through a unique approach to analyzing quantum market states.
+
+The qpe_dlog function plays a key role in this process. It creates a quantum circuit capable of finding hidden patterns in price movements. The use of 22 qubits allows the system to work with fairly complex market patterns.
+
+Event horizon and its meaning
+
+The event horizon concept implemented in the calculate_future_horizon function allows us to evaluate potential market development scenarios. In practice, we have found that the system is most effective at predicting movements in the 5-15 day range.
+
+An example would be when the system predicted a significant price move after a long period of consolidation. Analysis of quantum states showed a high probability of a breakdown of the resistance level, which occurred a few days later.
+
+Test results
+
+Testing the system on historical data showed interesting results. The analyze_market_state function uses constants a = 70000000 and N = 17000000, which were chosen empirically to work optimally with financial time series.
+
+When analyzing various currency pairs, the system showed the following results:
+
+The most accurate forecasts on the daily timeframe
+Increased efficiency during the formation of new trends
+Ability to identify potential turning points
+High accuracy when working with highly liquid instruments
+Features of working with MetaTrader 5
+Integration with MetaTrader 5 allowed us to automate the process of obtaining and analyzing data. The get_price_data function provides reliable retrieval of historical data, and subsequent transformation into a binary sequence via prices_to_binary creates the basis for quantum analysis.
+
+Further development
+
+While working on the system, we identified several areas for improvement:
+
+Optimization of quantum circuit parameters for various market conditions
+Development of adaptive algorithms for determining the length of the event horizon
+Integration with other technical analysis methods
+The next version of the system is planned to add auto calibration of parameters depending on the current market state and implement a more flexible forecasting mechanism.
+
+
+Analysis of the results of testing a quantum system
+Initial data and results
+
+
+
+During the test, we analyzed a point on the EURUSD chart with the forecast horizon of 12 candles. Of particular interest is the binary sequence of prices up to the event horizon point:
+
+1000000010000000100010111101101000001100001010101010000011001100
+
+This sequence represents an encoded history of price movement, where each bit corresponds to the direction of price movement (1 - increase, 0 - decrease).
+
+Analysis of the probability matrix
+
+Quantum analysis has revealed an interesting feature in the probability distribution of states. The most probable state (00000000000000000000000) received the probability of 5.13%, which is significantly higher than the other states. This indicates a strong bearish trend in the near term.
+
+The distribution of other probable states is noteworthy:
+
+Second place: 0000100000000000000000 (0.93%)
+Third place: 0000000000000001000000 (0.90%)
+This distribution indicates a high probability of consolidation followed by a downward movement.
+
+Comparing forecast with reality
+
+Actual price movement: 110001100000 System forecast: 000000000000 Match accuracy: 66.67%
+
+Despite the fact that the binary sequences did not match completely, the system correctly determined the predominant direction of movement. In reality, we saw 4 positive moves out of 12, which confirms the overall bearish trend predicted by the system.
+
+Probability distribution analysis
+
+Of particular interest was the analysis of the probability distribution over individual bits of the event horizon. We see a clear predominance of the probability of zero values (about 12.43%) over single values (less than 1%) for most positions.
+
+The exceptions were:
+
+Bit 3: 0.70% growth probability
+Bit 5: 0.93% growth probability
+Bit 10: 0.80% growth probability
+Bit 12: 0.83% growth probability
+This distribution accurately reflected periods of short-term corrections in the overall downward trend.
+
+This is what trading with this system looks like, in conjunction with a semi-automated system that automatically picks up manually opened positions and pyramids them along with a trailing stop and breakeven:
+
+
+
+Practical conclusions
+
+Tests revealed several important features of the system:
+
+The system is particularly effective in determining the general direction of the trend. Despite the inaccuracies at specific points, the general direction of movement was predicted correctly.
+The probability distribution of quantum states provides additional information about the strength of the trend. A high concentration of probability in one state (5.13% in this case) indicates a strong trend.
+Analysis of individual bits of the event horizon allows us to predict not only the direction, but also potential correction points.
+Prediction accuracy
+
+In this particular case, the system demonstrated:
+
+Accuracy in trend direction: 100%
+Accuracy of individual movements: 66.67%
+Correct defining of the growth/decline ratio
+These results confirm the efficiency of the quantum approach to market data analysis, particularly in identifying medium-term price movement trends.
+
+Practical use
+The second code is a quantum analyzer. Enter the symbol, event horizon, and forecast horizon. 
+
+
+
+The program will then "think" for a while, calculating combinations and probabilities (but on this framework it is still thousands of times faster than a normal calculation using loops). Then we get not only a forecast, but also a probability distribution:
+
+
+
+Here is a visualization of our forecast horizon:
+
+
+
+Sometimes, however, accuracy drops to such a degree that we cannot even overcome the 50% win rate threshold. But more often than not, not only the quantitative ratio of bits is correctly predicted, but sometimes even their location (which corresponds to the prediction of future price increases).
+
+
+
+
+Conclusion
+"It is impossible to predict the market," said the classics of technical analysis. Well, it looks like quantum mechanics is ready to challenge this statement. After months of experimenting with quantum computing in financial analysis, we can confidently say that the future is already here, and it is quantum. And we are proud to be at the origins of this revolution.
+
+We combined Qiskit and MetaTrader 5, achieving 100% trend detection accuracy and 66.67% overall forecast accuracy. Using 22 qubits and 256 candles of data, our system analyzes all possible market states simultaneously, choosing the most likely one.
+
+The key discovery is the connection between quantum states and trend strength. The probability concentration in one state reaches 5.13%, which can be compared to the detection of gravitational waves - predicted by theory, but measured for the first time.
+
+Our system is not a ready-made strategy, but a platform for quantum trading. The code available in MQL5 allows developers to create their own algorithms.
+
+Next steps:
+
+Integration with IBM's quantum cloud services
+Development of adaptive quantum circuits
+A framework for rapid strategy prototyping
+Quantum computing is following the same path as machine learning in trading: from experiments to industry standard. The code is open to the community - join us in shaping the future of algorithmic trading.
+
+Article link for clearity
+https://www.mql5.com/en/articles/17171
+

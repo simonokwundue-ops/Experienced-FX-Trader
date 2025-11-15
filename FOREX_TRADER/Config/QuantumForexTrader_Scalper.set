@@ -1,0 +1,54 @@
+; QuantumForexTrader Scalper EA Settings
+; Optimized for M1/M5 fast trading
+
+; === Quantum Scalping Settings ===
+UseQuantumAnalysis=true
+QuantumLookback=100
+QuantumHorizon=5
+QuantumConfidenceThreshold=55.0
+QuantumWeight=0.7
+UseQuantumRisk=true
+FastQuantumMode=true
+
+; === Scalping Strategy ===
+UseMAScalping=true
+UseRSIScalping=true
+UseBBScalping=true
+MinSignalScore=50
+FastMA=5
+SlowMA=20
+RSI_Period=9
+BB_Period=15
+BB_Deviation=2.0
+
+; === Scalping Position Management ===
+ScalpTargetPips=10.0
+ScalpStopLossPips=15.0
+UseQuickExit=true
+UseTimeBasedExit=true
+MaxHoldMinutes=30
+UseTightBreakeven=true
+BreakevenTriggerPips=5.0
+
+; === Scalping Filters ===
+UseSpreadFilter=true
+MaxSpreadPips=2.0
+UseVolatilityFilter=true
+ATR_Period=10
+MinATRPips=5.0
+MaxATRPips=30.0
+
+; === Scalping Risk Management ===
+ScalpRiskPercent=0.5
+MaxDailyScalps=50
+MaxConcurrentScalps=3
+ScalpCooldownSeconds=60
+MaxDailyDrawdownPercent=5.0
+
+; === Advanced Scalping Settings ===
+MagicNumber=345679
+TradeComment=QuantumScalp
+Slippage=20
+TradeOnlyHighActivity=true
+HighActivityStartHour=7
+HighActivityEndHour=16
